@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>历史版本</title>
+    {include file='../index/head.html'}
+</head>
+<body>
+<div class="container-fluid" style="margin-left:300px;">
+    {include file='../index/nav.html'}
+
+    <div class="mainBody">
+        <div class="clearfix">
+            <div class="left search">
+                <form action="{$myf_path}/" id="searchForm" method="get">
+                    <div class="input-group">
+                        <input type="hidden" name="playerUuid" value="{$playerUuid}" id="txtPlayerUuid">
+                        <div class="row">
+                            <div class="col-md-5" style="margin:0;padding:0 0 0 15px ">
+                                <select class="form-control">
+                                    <option value="">所有节点</option>
+                                    <option value="beta">beta</option>
+                                    <option value="cn">cn</option>
+                                    <option value="us">us</option>
+                                    <option value="jp">jp</option>
+                                    <option value="au">au</option>
+                                    <option value="eu">eu</option>
+                                </select>
+                            </div>
+                            <div class="col-md-7" style="margin:0;padding:0 0 0 5px;">
+                                <input type="text" class="form-control" id="txtName" name="name" value="{$keyword|escape:'html'}" placeholder="名称,支持模糊搜索">
+                            </div>
+                        </div>
+                        <span class="input-group-btn">
+                    <button class="btn btn-default" id="btnSearch" type="button">搜索</button>
+                </span>
+                    </div>
+                </form>
+            </div>
+            <div class="left mr5">
+                <button data-href="{$myf_path}/deploy/create" data-title="版本发布" id="btnCreate"
+                        onclick="openModel('btnCreate')" class="btn btn-primary">版本发布
+                </button>
+                <button class="btn btn-primary trigger-custom1">pop</button>
+            </div>
+
+        </div>
+
+
+        <div class="split-line"></div>
+
+        <table id="tablePlayer" class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th class="ckb"><input type="checkbox" id="chkAll"></th>
+                <th class="spic">标题</th>
+                <th>节点</th>
+                <th>TAG</th>
+                <th>状态</th>
+                <th>创建时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {if empty($rows)}
+            <tr>
+                <td colspan="7">
+                    暂无数据
+                </td>
+            </tr>
+            {else}
+            {foreach from=$rows item=vo}
+            <tr data-id="{$vo.uuid}">
+                <th><input type="checkbox" class="chk-item" id="chk_{$vo.id}" value="{$vo.id}"></th>
+                <td>
+                    {$vo.title|escape:'html'}
+                </td>
+                <td>
+                    {$vo.node}
+                </td>
+                <td>
+                    {$vo.tag|escape:'html'}
+                </td>
+                <td>
+                    {if $vo.status eq 0}
+                    <span class=" bg-info vStatus">加密中</span>
+                    {else if $vo.status eq 1}
+                    <span class=" bg-success vStatus">成功</span>
+                    {else}
+                    <span class=" bg-danger vStatus">失败</span>
+                    {/if}
+                </td>
+                <td>
+                    {$vo.create_time}
+                </td>
+                <td>
+                    <a href="javascript:openModel('btnRollBack_{$vo.id}');" id="btnRollBack_{$vo.id}"  data-href="{$myf_path}/encode/?tag={$vo.tag}&type=release" data-title="版本发布">发布</a>
+                </td>
+            </tr>
+            {/foreach}
+            {/if}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" id="modelDialog" role="document" style="width:800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <iframe type="text/html" id="modalFrame" name="modalFrame" width="758" height="460" src="" frameborder="0" allowfullscreen=""></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file='../index/bottom.html'}
+
+<script type="text/javascript">
+    function openModel(id) {
+        var obj = $("#" + id);
+        var href = obj.data('href');
+        var title = obj.data("title");
+        $("#myModalLabel").html(title);
+        $('#myModal').modal({
+            show:true,
+            keyboard:false,
+            backdrop:'static'
+        });
+        $('#myModal iframe').attr('src', href);
+        $('#myModal').on('shown.bs.modal', function (e) {
+            $("#myModal").css("padding-left",'300px')
+        })
+    }
+
+
+
+    function clearMessage() {
+        SelfBuild.html("");
+    }
+
+    $(".trigger-custom1").on('click', function (event) {
+        event.preventDefault();
+
+        iziToast.error({
+            title: 'Error',
+            message: 'Illegal operation',
+            position: 'bottomCenter',
+            transitionIn: 'fadeInDown'
+        });
+
+        iziToast.warning({
+            title: 'Caution',
+            message: 'You forgot important data',
+            position: 'bottomCenter',
+            transitionIn: 'fadeInDown'
+        });
+
+        iziToast.success({
+            title: 'OK',
+            message: 'Successfully inserted record!',
+            position: 'bottomCenter',
+            transitionIn: 'fadeInDown'
+        });
+    });
+</script>
+
+
+<script type="text/javascript">
+    initWs();
+
+    function changeChildProgress(value) {
+        console.log(typeof $("#modalFrame")[0].contentWindow.changeProgress);
+        if(typeof $("#modalFrame")[0].contentWindow.changeProgress =='function'){
+            $("#modalFrame")[0].contentWindow.changeProgress(value);
+        }else{
+            console.log("no frames progress:."+value);
+        }
+    }
+
+</script>
+</body>
+</html>

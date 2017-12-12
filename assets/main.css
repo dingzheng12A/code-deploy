@@ -1,0 +1,41 @@
+.clear{
+    clear:both;
+    height:0;
+    line-height:0;
+    overflow: hidden;
+}
+.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+.clearfix{display:inline-block;}
+
+/* Hides from IE-mac \*/
+* html .clearfix{height:1%;}
+.clearfix{display:block;}
+/* End hide from IE-mac */
+
+.left{ float: left; display: inline; }
+.right{ float: right; display: inline; }
+
+.mainBody{
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    padding:10px;
+}
+.split-line{
+    border-bottom:1px solid #ddd;
+    margin:10px 0 10px 0;
+}
+.search{
+    width:350px;
+    margin-right:5px;
+}
+.mr5{
+    margin-right:5px;
+}
+.vStatus{
+    padding:5px;
+    display: inline-block;
+}
+ p.wsItem{
+    word-break:break-all;
+    padding:10px;
+}

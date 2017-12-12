@@ -1,0 +1,17 @@
+{
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://packagist.phpcomposer.com"
+    },
+    {
+      "packagist": false
+    }
+  ],
+  "config": {
+    "secure-http": false
+  },
+  "require": {
+    "smarty/smarty": "3.1.30"
+  }
+}
