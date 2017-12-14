@@ -5,6 +5,7 @@ if [ $# -ne 1 ];then
 fi
 dirlist=("assets" "config" "controllers" "images" "lang" "main" "model" "views")
 dirlen=${#dirlist[@]}
+shellpath=$(cd $(dirname $0);pwd)
 msg=""
 res=0
 tag=$1
