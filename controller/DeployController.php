@@ -11,6 +11,7 @@ namespace Myf\Controller;
 
 use Myf\Libs\CmsException;
 use Myf\Libs\ExecCommand;
+use Myf\Libs\Log;
 use Myf\Libs\MvcController;
 
 class DeployController extends MvcController
@@ -147,6 +148,7 @@ class DeployController extends MvcController
         $this->pushText(json_encode($beforeMsg));
         //执行命令
         $res = ExecCommand::execute($command);
+        Log::write(sprintf("command=【%s】,res=【%s】",jsonCNEncode($command),jsonCNEncode($res)));
         //执行后发送消息
         $afterMsg = array_merge($res,$cmd);
         $afterMsg['cmd']='after';
