@@ -42,7 +42,7 @@ if [ $? -ne 0 ];then
 	echo "未知错误,$(cat .npmerr)";
 	exit 1
 fi
-/usr/local/node/bin/gulp build  2>.err
+gulp build  2>.err
 if [ $? -ne 0 ];then
 	echo  "前端代码编译出错:原因:$(cat .err)"
 	exit 3
