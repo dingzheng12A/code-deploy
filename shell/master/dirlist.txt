@@ -1,0 +1,11 @@
+CloudAdmin
+CloudAdminWebApp
+CloudAUTH
+CloudDaemon
+CloudLisence
+CloudOrder
+CloudREST
+CloudSERVICE
+CloudUpload
+CloudWEBAPP
+Common
