@@ -7,6 +7,7 @@ dirlist=("assets" "config" "controllers" "images" "lang" "main" "model" "views")
 dirlen=${#dirlist[@]}
 msg=""
 res=0
+tag=$1
 checkdir(){
 	for((i=0;i<dirlen;i++))
 	do
@@ -21,7 +22,7 @@ if [ ! -d /data/vnnox-source/$1 ];then
 	echo "/data/vnnox-source/$1 don't exits"
 	exit 2
 fi
-${shellpath}/code_md5_check.sh
+${shellpath}/code_md5_check.sh $tag
 if [ $? -eq 0 ];then
         exit 0
 fi

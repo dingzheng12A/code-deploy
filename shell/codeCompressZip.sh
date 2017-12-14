@@ -3,7 +3,8 @@ if [ $# -ne 1 ];then
 	echo -e "参数tag不能为空!"
 	exit 1
 fi 
-${shellpath}/code_md5_check.sh
+tag=$1
+${shellpath}/code_md5_check.sh $tag
 if [ $? -eq 0 ];then
         exit 0
 fi

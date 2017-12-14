@@ -25,7 +25,7 @@ if [ $# -ne 1 ];then
 	exit 1
 fi
 
-${shellpath}/code_md5_check.sh
+${shellpath}/code_md5_check.sh $tag
 if [ $? -eq 0 ];then
 	exit 0
 fi
