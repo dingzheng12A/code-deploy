@@ -37,12 +37,12 @@ if [ -e /data/npm/package-lock.json ];then
 fi
 cd /data/vnnox-source/$1/CloudWEBAPP/
 [ ! -d /data/vnnox-source/$1/CloudWEBAPP/dist ] || rm -rf  /data/vnnox-source/$1/CloudWEBAPP/dist
-npm install >.npmerr 2>&1
+/usr/local/node/bin/npm install >.npmerr 2>&1
 if [ $? -ne 0 ];then
 	echo "未知错误,$(cat .npmerr)";
 	exit 1
 fi
-gulp build  2>.err
+/usr/local/node/bin/gulp build  2>.err
 if [ $? -ne 0 ];then
 	echo  "前端代码编译出错:原因:$(cat .err)"
 	exit 3
