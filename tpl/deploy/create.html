@@ -60,6 +60,7 @@
         </div>
         <div class="form-group">
             <button type="button" id="btnSubmit" class="btn btn-primary">提交处理请求</button>
+            <span id="txtTimer"></span>
         </div>
         <div id="htmlResult">
 
@@ -74,6 +75,8 @@
         submitForm();
     });
 
+    var timer = null;
+    var timerInfo = 0;
 
 
     function submitForm() {
@@ -82,6 +85,16 @@
         var node = $("input[name='node']:checked").val();
 
         if(tag!='' && title!=''){
+
+            timerInfo = 0;
+            if(timer!=null){
+                clearInterval(timer);
+            }
+            timer = window.setInterval(function () {
+                timerInfo++;
+                $("#txtTimer").html(timerInfo+"s");
+            },1000);
+
             //禁止操作
             disableFormElement();
 
@@ -99,6 +112,11 @@
 
             changeProgress(6);
             $.post("{$myf_path}/deploy/handler",data,function (res) {
+
+                if(timer!=null){
+                    clearInterval(timer);
+                }
+
                 //允许操作
                 enableFormElement();
 
