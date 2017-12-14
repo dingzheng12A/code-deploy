@@ -21,6 +21,10 @@ if [ ! -d /data/vnnox-source/$1 ];then
 	echo "/data/vnnox-source/$1 don't exits"
 	exit 2
 fi
+${shellpath}/code_md5_check.sh
+if [ $? -eq 0 ];then
+        exit 0
+fi
 
 inside_version=$(cat /data/vnnox-source/$1/version.txt|cut -d @ -f 1)
 if [ "${inside_version}" != "$1" ];then

@@ -24,6 +24,12 @@ if [ $# -ne 1 ];then
 	echo "Usage: $0 tag"
 	exit 1
 fi
+
+${shellpath}/code_md5_check.sh
+if [ $? -eq 0 ];then
+	exit 0
+fi
+
 if [ ! -d /data/vnnox-git ];then
 	git clone git@172.16.80.102:/vnnox/vnnox.git  /data/vnnox-git
 fi

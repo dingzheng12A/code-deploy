@@ -3,6 +3,10 @@ if [ $# -ne 1 ];then
 	echo -e "参数tag不能为空!"
 	exit 1
 fi 
+${shellpath}/code_md5_check.sh
+if [ $? -eq 0 ];then
+        exit 0
+fi
 if [ ! -d /data/vnnox-source/$1/CloudWEBAPP/dist ];then
 	echo "目标路径:/data/vnnox-source/$1/CloudWEBAPP/dist 不存在"
 	exit 2

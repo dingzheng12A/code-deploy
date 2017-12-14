@@ -14,4 +14,3 @@ if [ -d /data/release/vnnox/$1 ];then
 	fi
 
 fi
-~     
