@@ -4,6 +4,7 @@ if [ $# -ne 1 ];then
 	exit 1
 fi 
 tag=$1
+shellpath=$(cd $(dirname $0);pwd)
 ${shellpath}/code_md5_check.sh $tag
 if [ $? -eq 0 ];then
         exit 0
