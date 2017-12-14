@@ -39,6 +39,9 @@ class DeployController extends MvcController
         $tag = post("tag");
         //待发布的服务器节点
         $node = post("node");
+        if(!$this->checkNode($node)){
+            CmsException::throwExp("请选择正确的服务器节点");
+        }
         //step:1
         $this->fetchCode($tag);
         //step:2
@@ -147,17 +150,37 @@ class DeployController extends MvcController
         //执行后发送消息
         $afterMsg = array_merge($res,$cmd);
         $afterMsg['cmd']='after';
+        $resCode = $res['code'];
         //进度条
-        $afterMsg['progress']=$cmd['max'];
+        if ($resCode == 0) {
+            $afterMsg['progress'] = $cmd['max'];
+        }else{
+            $afterMsg['progress'] = $cmd['max']-10;
+        }
         $this->pushText(json_encode($afterMsg));
 
-        $resCode = $res['code'];
         if ($resCode == 0) {
             return $res['output'];
         } else {
             //出现异常
             $error = $res['output'];
             CmsException::throwExp($error, $resCode);
+        }
+    }
+
+    /**
+     * 检测服务器节点是否正确
+     * @param $node
+     * @return bool
+     */
+    private function checkNode($node){
+        $nodes = [
+            'dev','test','beta','cn','jp','eu','au','us'
+        ];
+        if(in_array($node,$nodes)){
+            return true;
+        }else{
+            return false;
         }
     }
 

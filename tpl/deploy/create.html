@@ -23,7 +23,9 @@
         <div class="form-group">
             <label>选择发布服务器</label><br/>
             <div style="font-size:16px;line-height: 35px;">
-                <label><input type="radio" name="node" id="chkServerBeta" class="chkServer" checked="checked" value="beta" >&nbsp;beta服务器</label>&nbsp;&nbsp;
+                <label><input type="radio" name="node" id="chkServerDev" class="chkServer" checked="checked" value="devs" >&nbsp;dev服务器</label>&nbsp;&nbsp;
+                <label><input type="radio" name="node" id="chkServerTest" class="chkServer" value="test">&nbsp;test中国节点</label><br/>
+                <label><input type="radio" name="node" id="chkServerBeta" class="chkServer" value="beta" >&nbsp;beta服务器</label>&nbsp;&nbsp;
                 <label><input type="radio" name="node" id="chkServerCn" class="chkServer" value="cn">&nbsp;cn中国节点</label>&nbsp;&nbsp;
                 <label><input type="radio" name="node" id="chkServerJp" class="chkServer" value="jp">&nbsp;jp日本节点</label><br/>
                 <label><input type="radio" name="node" id="chkServerUs" class="chkServer" value="us">&nbsp;us美国节点</label>&nbsp;&nbsp;
@@ -51,7 +53,7 @@
                 </div>
             </div>
             <div class="progress">
-                <div id="progressMain" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 5%">
+                <div id="progressMain" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
                     0%
                 </div>
             </div>
@@ -77,11 +79,14 @@
     function submitForm() {
         var tag = $("#txtTag").val();
         var title = $("#txtTitle").val();
-        var node = $("input[name='chkServer']:checked").val();
+        var node = $("input[name='node']:checked").val();
 
         if(tag!='' && title!=''){
             //禁止操作
             disableFormElement();
+
+            //移除错误样式
+            removeProgressClass("progress-bar-danger");
 
             //清空mess消息框
             parent.clearMessage();
@@ -97,6 +102,11 @@
                 //允许操作
                 enableFormElement();
 
+                if(res['status']==0){
+                    //成功
+                }else{
+                    SelfBuild.toastError(res['error']);
+                }
 
             },'json');
 
@@ -125,6 +135,14 @@
     function changeProgress(value) {
         var width = value+"%";
         $("#progressMain").css('width',width).html(width);
+    }
+    
+    function addProgressClass(cl) {
+        $("#progressMain").addClass(cl);
+    }
+
+    function removeProgressClass(cl) {
+        $("#progressMain").removeClass(cl);
     }
 
 </script>

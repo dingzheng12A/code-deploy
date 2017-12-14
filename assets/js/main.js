@@ -1,5 +1,5 @@
 iziToast.settings({
-    timeout: 10000,
+    timeout: 3000,
     // position: 'center',
     // imageWidth: 50,
     pauseOnHover: true,
@@ -170,6 +170,8 @@ function showWsMessage(data) {
             break;
         case 'error':
             SelfBuild.error(content);
+            //出错了
+            setChildProgressError();
             break;
         case 'success':
             SelfBuild.success(content);
