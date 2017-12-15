@@ -50,8 +50,8 @@ else
 		msg=$(ssh $master_ip "/etc/scripts/transfer_to_sub.sh $tag ${sub_ip}")
 	fi
 fi
-
-if [ ! -z "$msg" ];then
+hostinfors=(${msg[@]})
+if [ ! -z "$msg" -a ${#hostinfor[@]} -ge 3 ];then
 	IFS="\n"
         hostinfors=(${msg[@]})
         for infor in ${hostinfors[@]}
