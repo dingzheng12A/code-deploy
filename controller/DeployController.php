@@ -66,7 +66,7 @@ class DeployController extends MvcController
             'title'=>$title,
             'node'=>$node,
             'tag'=>$tag,
-            'status'=>2,
+            'status'=>1,//成功
             'create_time'=>$now,
             'cost_time'=>($endTime-$startTime),
         ];
