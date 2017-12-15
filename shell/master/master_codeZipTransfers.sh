@@ -19,8 +19,8 @@ if [ ! -s "/data/release/vnnox/$1.tar.bz2_md5.txt" ];then
         echo "MD5文件:/data/vnnox-source/$1.tar.bz2_md5.txt 不存在 "
         exit 2
 fi  
-ssh -v $master_ip "mkdir -p /data/release/vnnox/"
-scp  -v /data/release/vnnox/$1.tar.bz2* $master_ip:/data/release/vnnox/   >.tansfer 2>&1
+ssh  $master_ip "mkdir -p /data/release/vnnox/"
+scp   /data/release/vnnox/$1.tar.bz2* $master_ip:/data/release/vnnox/   >.tansfer 2>&1
 if [ $? -ne 0 ];then
 	echo "代码包同步失败"
 	exit 3
