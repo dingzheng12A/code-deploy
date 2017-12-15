@@ -87,14 +87,14 @@
                     {else if $vo.status eq 1}
                     <span class=" bg-success vStatus">成功</span>
                     {else}
-                    <span class=" bg-danger vStatus">回滚</span>
+                    <span class=" bg-danger vStatus">失败</span>
                     {/if}
                 </td>
                 <td>
                     {$vo.create_time}
                 </td>
                 <td>
-                    <a href="javascript:openModel('btnRollBack_{$vo.id}');" id="btnRollBack_{$vo.id}"  data-href="{$myf_path}/encode/?tag={$vo.tag}&type=release" data-title="版本发布">发布</a>
+                    <a href="javascript:openModel('btnRollBack_{$vo.id}');" id="btnRollBack_{$vo.id}"  data-href="{$myf_path}/encode/?tag={$vo.tag}&type=release" data-title="版本回滚">回滚</a>
                 </td>
             </tr>
             {/foreach}
