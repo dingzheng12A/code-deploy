@@ -39,7 +39,6 @@ if [ $? -ne 0 ];then
 	echo "代码包同步失败"
 	exit 3
 fi
-echo "tag is:$tag"
 ssh $master_ip  "/etc/scripts/md5_check.sh $tag"
 if [ $? -ne 0 ];then
 	echo "主机:${master_ip} MD5检查失败"
