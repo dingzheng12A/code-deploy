@@ -16,7 +16,7 @@ return [
     //zip命令
     'zipSh'=>'zip -r ',
     //websocket
-    'wsHost'=>'10.20.10.58:8911',
+    'wsHost'=>'10.20.10.58:9011',
     'wsHttp'=>'http://10.20.10.58:9012',
     //dev上的服务地址
     'buildHttp'=>'http://10.20.10.58:9022',
