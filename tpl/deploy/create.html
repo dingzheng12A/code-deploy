@@ -122,6 +122,7 @@
 
                 if(res['status']==0){
                     //成功
+                    addProgressClass("progress-bar-success");
                 }else{
                     SelfBuild.toastError(res['error']);
                 }

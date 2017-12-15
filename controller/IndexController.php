@@ -16,7 +16,7 @@ class IndexController extends MvcController
 {
     public function indexAction(){
         $vModel = new VersionModel();
-        $versions = $vModel->findAll();
+        $versions = $vModel->order("id desc")->findAll();
         $this->assign('rows',$versions);
         $this->display();
     }
