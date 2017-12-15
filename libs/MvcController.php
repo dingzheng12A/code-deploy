@@ -9,6 +9,8 @@
 namespace Myf\Libs;
 
 
+use Myf\Constants\RedisConfig;
+
 class MvcController {
 
     private $smt;
@@ -183,7 +185,7 @@ class MvcController {
     public function pushText($text){
         $redis = Redis::getInstance();
         $userIdArr=[];
-        $userIds = $redis->get('selfBuildUserIds');
+        $userIds = $redis->get(RedisConfig::USER_IDS);
         if(!empty($userIds)){
             $userIdArr = json_decode($userIds,true);
         }

@@ -17,9 +17,9 @@ return [
     'zipSh'=>'zip -r ',
     //websocket
     'wsHost'=>'10.20.10.58:8911',
-    'wsHttp'=>'http://10.20.10.58:8912',
+    'wsHttp'=>'http://10.20.10.58:9012',
     //dev上的服务地址
-    'buildHttp'=>'http://10.20.10.58:8922',
+    'buildHttp'=>'http://10.20.10.58:9022',
     //系统模式
     'system'=>'linux',
     //发布目录

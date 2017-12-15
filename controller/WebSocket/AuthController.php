@@ -9,6 +9,7 @@
 namespace Myf\Controller\WebSocket;
 
 
+use Myf\Constants\RedisConfig;
 use Myf\Libs\Redis;
 use Myf\Libs\WebSocketController;
 
@@ -42,13 +43,13 @@ class AuthController extends WebSocketController
 
             //上线的用户
             $userIdArr = [];
-            $userIds = $redis->get('selfBuildUserIds');
+            $userIds = $redis->get(RedisConfig::USER_IDS);
             if(!empty($userIds)){
                 $userIdArr = json_decode($userIds,true);
             }
             $userIdArr[]=$userId;
 
-            $redis->set('selfBuildUserIds',json_encode($userIdArr));
+            $redis->set(RedisConfig::USER_IDS,json_encode($userIdArr));
 
             $this->success($fd,$res);
         }else{
@@ -69,7 +70,7 @@ class AuthController extends WebSocketController
             $redis->del($userId);
             $redis->del($connUid);
 
-            $userIdStr = $redis->get('selfBuildUserIds');
+            $userIdStr = $redis->get(RedisConfig::USER_IDS);
             if(!empty($userIdStr)){
                 $userIdArr = json_decode($userIdStr,true);
                 foreach ($userIdArr as $k=> $uid){
@@ -78,7 +79,7 @@ class AuthController extends WebSocketController
                         break;
                     }
                 }
-                $redis->set('selfBuildUserIds',json_encode($userIdArr));
+                $redis->set(RedisConfig::USER_IDS,json_encode($userIdArr));
             }
         }
     }
