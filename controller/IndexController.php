@@ -15,6 +15,9 @@ use Myf\Model\VersionModel;
 class IndexController extends MvcController
 {
     public function indexAction(){
+        $vModel = new VersionModel();
+        $versions = $vModel->findAll();
+        $this->assign('rows',$versions);
         $this->display();
     }
 
