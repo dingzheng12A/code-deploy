@@ -170,8 +170,6 @@ function showWsMessage(data) {
             break;
         case 'error':
             SelfBuild.error(content);
-            //出错了
-            setChildProgressError();
             break;
         case 'success':
             SelfBuild.success(content);
