@@ -13,7 +13,7 @@ return array(
             'port' => '3306',
             'username' => 'nova_server',
             'password' => 'I0UGkUrUY6XoJMyQEwx9',
-            'dbname' => 'nova_self_build',
+            'dbname' => 'nova_deploy',
             'charset' => 'utf8',
             'prefix' => ''
         ),
