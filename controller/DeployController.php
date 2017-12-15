@@ -13,6 +13,7 @@ use Myf\Libs\CmsException;
 use Myf\Libs\ExecCommand;
 use Myf\Libs\Log;
 use Myf\Libs\MvcController;
+use Myf\Model\VersionModel;
 
 class DeployController extends MvcController
 {
@@ -43,6 +44,7 @@ class DeployController extends MvcController
         if(!$this->checkNode($node)){
             CmsException::throwExp("请选择正确的服务器节点");
         }
+        $startTime = getMillisecond();
         //step:1
         $this->fetchCode($tag);
         //step:2
@@ -57,6 +59,18 @@ class DeployController extends MvcController
         $res = [
             'ok'
         ];
+        //暂时只记录发布成功的版本信息
+        $now = getCurrentTime();
+        $endTime = getMillisecond();
+        $data = [
+            'title'=>$title,
+            'node'=>$node,
+            'tag'=>$tag,
+            'status'=>2,
+            'create_time'=>$now,
+            'cost_time'=>($endTime-$startTime),
+        ];
+        (new VersionModel())->add($data);
         $this->echoSuccessJson($res);
     }
 
