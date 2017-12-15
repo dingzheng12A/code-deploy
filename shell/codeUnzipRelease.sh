@@ -54,16 +54,23 @@ if [ -z "$res" ];then
 		exit 0
 	fi
 else
-	IFS="\n"
+	IFS="\v"
 	hostinfors=(${res[@]})
 	for infor in ${hostinfors[@]}
 	do
-		if [ $(echo $infor|wc -c) -gt 2 ];then
-		host=$(echo $infor|awk '{print $1}')
-		exit_code=$(echo $infor|awk '{print $3}')
-		msg=$(echo $infor|awk '{print $2}')
-		echo "area:$2 host:$host exit_code:$exit_code msg:$msg"
-		fi
+		if [ "$2" == "eu" ];then
+                        if [ ! -z "$infor" ];then
+                                echo "$infor"
+                        fi
+
+                else
+                        if [ $(echo $infor|wc -c) -gt 2 ];then
+                        host=$(echo $infor|awk '{print $1}')
+                        exit_code=$(echo $infor|awk '{print $3}')
+                        msg=$(echo $infor|awk '{print $2}')
+                        echo "area:$2 host:$host exit_code:$exit_code msg:$msg"
+                        fi
+                fi
 	done
 	exit 1
 fi

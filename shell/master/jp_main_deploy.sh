@@ -11,17 +11,17 @@ master_ip=$(/etc/scripts/read.py $2 master)
 #echo "master_ip:${master_ip}"
 sub_ip=$(/etc/scripts/read.py $2 sub_host)
 res=$(ssh $master_ip "/etc/scripts/master_deploy.sh  $1 $sub_ip")
-if [  $res -eq 0 ];then
+if [  -z "$res" ];then
 	link_res=$(ssh $master_ip "/etc/scripts/master_link.sh  $1 $sub_ip")
 	if [ ! -z "$link_res" ];then
 		IFS='\v'
         	hostinfors=(${link_res[@]})
         	for infor in ${hostinfors[@]}
         	do
-        	if [ $(echo $infor|wc -c) -gt 2 ];then
+		if [ ! -z "$infor" ];then
         	host=$(echo $infor|awk '{print $1}')
-        	msg=$(echo $infor|awk '{$1="";sub(" ","");$NF="";print}')
         	exit_code=$(echo $infor|awk '{print $NF}')
+        	msg=$(echo $infor|awk '{$1="";sub(" ","");$NF="";print}')
         	echo "host:$host exit_code:$exit_code msg:$msg"
         	fi
         	done
