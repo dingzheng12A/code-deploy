@@ -46,7 +46,6 @@ if [ $? -ne 0 ];then
 	exit 4
 else
 	if [ "$2" == "eu" ];then
-		echo "aaaaaa"
 		msg=$(ssh $master_ip "/etc/scripts/master_codeZipTransfers.sh  $1 eu")
 	else
 		msg=$(ssh $master_ip "/etc/scripts/transfer_to_sub.sh $tag ${sub_ip}")
