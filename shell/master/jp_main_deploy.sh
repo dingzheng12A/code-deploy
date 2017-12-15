@@ -10,9 +10,9 @@ shellpath=$(cd $(dirname $0);pwd)
 master_ip=$(/etc/scripts/read.py $2 master)
 #echo "master_ip:${master_ip}"
 sub_ip=$(/etc/scripts/read.py $2 sub_host)
-res=$(ssh $master_ip "/etc/scripts/sub_deploy.sh  $1 $sub_ip")
+res=$(ssh $master_ip "/etc/scripts/master_deploy.sh  $1 $sub_ip")
 if [  $res -eq 0 ];then
-	link_res=$(ssh $master_ip "/etc/scripts/sub_link.sh  $1 $sub_ip")
+	link_res=$(ssh $master_ip "/etc/scripts/master_link.sh  $1 $sub_ip")
 	if [ ! -z "$link_res" ];then
 		IFS='\v'
         	hostinfors=(${link_res[@]})
