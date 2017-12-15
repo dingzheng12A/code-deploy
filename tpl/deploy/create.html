@@ -129,6 +129,7 @@
                     SelfBuild.toastError(res['error']);
                     addProgressClass("progress-bar-danger");
                     removeProgressClass("active");
+                    $("#progressMain").append(",出错了！");
                 }
 
             },'json');
