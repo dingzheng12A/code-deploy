@@ -1,6 +1,10 @@
 #!/bin/bash
 shellpath=$(cd $(dirname $0);pwd)
 transfer(){
+	md5_string=$(cat /data/release/vnnox/$1.tar.bz2_md5.txt|awk '{print $1}')
+        ssh $2 "/etc/scripts/check_md5_before_trans.sh $1 ${md5_string}"
+        if [ $? -ne 0 ];then
+        echo " $(date +'%Y-%m-%d %H:%M:%S') transaction ...." >/etc/scripts/transfer.log
 	ssh $2 "mkdir -p /data/release/vnnox"
 	scp /data/release/vnnox/$1.tar.bz2 /data/release/vnnox/$1.tar.bz2_md5.txt $2:/data/release/vnnox/  >${shellpath}/.transfer
 	if [ $? -ne 0 ];then
@@ -14,6 +18,7 @@ transfer(){
 	else
 		echo "代码发布成功"
 		exit 0
+	fi
 	fi
 }
 if [ $# -ne 2 ];then
