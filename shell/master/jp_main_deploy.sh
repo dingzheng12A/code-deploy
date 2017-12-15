@@ -1,8 +1,8 @@
 #!/bin/bash
 if [ $# -ne 2 ];then
-	echo "Usage:$0 tag [cn/us/jp/au/eu]"
+	echo "Usage:$0 tag [cn/us/jp/au/eu/beta]"
 	exit 1
-elif [ $2 != "cn" -a $2 != "us" -a $2 != "jp" -a $2 != "au" -a  $2 != "eu" ];then
+elif [ $2 != "cn" -a $2 != "us" -a $2 != "jp" -a $2 != "au" -a  $2 != "eu" -a $2 != "beta" ];then
 	echo "所选区域不正确!"
 	exit 1
 fi
