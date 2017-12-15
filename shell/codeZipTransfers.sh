@@ -33,21 +33,19 @@ if [ ! -s "/data/vnnox-source/$1.tar.bz2_md5.txt" ];then
         echo "MD5文件:/data/vnnox-source/$1.tar.bz2_md5.txt 不存在 "
         exit 2
 fi  
-ssh -v www@$master_ip "mkdir -p /data/release/vnnox/"
-scp  -v /data/vnnox-source/$1.tar.bz2* www@$master_ip:/data/release/vnnox/   >.tansfer 2>&1
+ssh  www@$master_ip "mkdir -p /data/release/vnnox/"
+scp   /data/vnnox-source/$1.tar.bz2* www@$master_ip:/data/release/vnnox/   >.tansfer 2>&1
 if [ $? -ne 0 ];then
 	echo "代码包同步失败"
 	exit 3
 fi
-echo "tag is:$tag"
 ssh $master_ip  "/etc/scripts/md5_check.sh $tag"
 if [ $? -ne 0 ];then
 	echo "主机:${master_ip} MD5检查失败"
 	exit 4
 else
 	if [ "$2" == "eu" ];then
-		echo "aaaaaa"
-		msg=$(ssh $master_ip "/etc/scripts/codeZipTransfers.sh  $1 eu")
+		msg=$(ssh $master_ip "/etc/scripts/master_codeZipTransfers.sh  $1 eu")
 	else
 		msg=$(ssh $master_ip "/etc/scripts/transfer_to_sub.sh $tag ${sub_ip}")
 	fi
