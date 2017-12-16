@@ -25,10 +25,6 @@ if [ $# -ne 1 ];then
 	exit 1
 fi
 
-${shellpath}/code_md5_check.sh $tag
-if [ $? -eq 0 ];then
-	exit 0
-fi
 
 if [ ! -d /data/vnnox-git ];then
 	git clone git@172.16.80.102:/vnnox/vnnox.git  /data/vnnox-git
@@ -54,6 +50,10 @@ fi
 		fi
 
 	fi
+${shellpath}/code_md5_check.sh $tag
+if [ $? -eq 0 ];then
+	exit 0
+fi
 
 if [ -d  /data/vnnox-source/$1 ];then
 	rm -rf /data/vnnox-source/$1

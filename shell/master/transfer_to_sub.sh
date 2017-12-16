@@ -3,6 +3,7 @@ set -x
 shellpath=$(cd $(dirname $0);pwd)
 my_ip="172.16.80.135"
 transfer(){
+<<<<<<< HEAD
 	#md5_string=$(cat /data/release/vnnox/$1.tar.bz2_md5.txt|awk '{print $1}')
 	#ssh $2 "/etc/scripts/check_md5_before_trans.sh $1 ${md5_string}"
 	ssh $2 "test -d /data/release/vnnox/$1"
@@ -17,6 +18,22 @@ transfer(){
 		fi
 		ssh $2 "rm -rf /data/release/vnnox/vnnox-source && \cp -rf /data/release/vnnox/$1 /data/release/vnnox/vnnox-source"
 		exit $?
+=======
+	md5_string=$(cat /data/release/vnnox/$1.tar.bz2_md5.txt|awk '{print $1}')
+        ssh $2 "/etc/scripts/check_md5_before_trans.sh $1 ${md5_string}"
+        if [ $? -ne 0 ];then
+	echo " $(date +'%Y-%m-%d %H:%M:%S') $2 transaction tag:$1 ...." >>/etc/scripts/transfer.log
+	ssh  -o StrictHostKeychecking=no $2 "mkdir -p /data/release/vnnox"
+	scp  -o StrictHostKeychecking=no /data/release/vnnox/$1.tar.bz2 /data/release/vnnox/$1.tar.bz2_md5.txt $2:/data/release/vnnox/  >${shellpath}/.transfer
+	if [ $? -ne 0 ];then
+		echo -e "同步包/data/release/vnnox/$1.tar.bz2 到$2失败,原因:$(cat ${shellpath}/.transfer)"
+		exit 3
+	fi
+	ssh $2 "/etc/scripts/client_md5_check.sh $1"
+	if [ $? -ne 0 ];then
+		echo "主机:$2 MD5校验代码包/data/release/vnnox/$1.tar.bz2 失败"
+		exit 4
+>>>>>>> 3b5e47b7725f35f75eb63ae40ba753dba35a1b23
 	else
 		echo "bu cunzai"
 		echo " $(date +'%Y-%m-%d %H:%M:%S') $2 transaction tag:$1 ...." >>/etc/scripts/transfer.log

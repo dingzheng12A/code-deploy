@@ -100,6 +100,7 @@
 
             //移除错误样式
             removeProgressClass("progress-bar-danger");
+            addProgressClass("active");
 
             //清空mess消息框
             parent.clearMessage();
@@ -123,8 +124,23 @@
                 if(res['status']==0){
                     //成功
                     addProgressClass("progress-bar-success");
+                    removeProgressClass("active");
+
+                    timerInfo = 0;
+                    timer = window.setInterval(function () {
+                        timerInfo++;
+                        if(10-timerInfo<=0){
+                            clearInterval(timer);
+                            parent.window.location.href="{$myf_path}/";
+                        }
+                        $("#txtTimer").html(timerInfo+"s，后自动返回");
+                    },1000);
+
                 }else{
                     SelfBuild.toastError(res['error']);
+                    addProgressClass("progress-bar-danger");
+                    removeProgressClass("active");
+                    $("#progressMain").append(",出错了！");
                 }
 
             },'json');
