@@ -18,7 +18,7 @@ if [ -d /data/vnnox-source/$1/.git ];then
 fi
 [ ! -f /data/vnnox-source/$1.tar.bz2 ]|| rm -rf /data/vnnox-source/$1.tar.bz2
 cd /data/vnnox-source/
-tar -pcjvf $1.tar.bz2 $1 >.tarmsg 2>&1
+tar --exclude=".git*" -pcjvf $1.tar.bz2 $1 >.tarmsg 2>&1
 if [ $? -ne 0 ];then
 	echo "压缩代码失败,原因:$(cat .tarmsg)"
 else
